@@ -11,16 +11,15 @@ class falco::repo inherits falco {
         Apt::Source['falco']
         -> Class['apt::update']
 
-        apt::key { 'falcosecurity':
-          ensure => 'refreshed',
-          source => 'https://falco.org/repo/falcosecurity-packages.asc',
-          id     => '478B2FBBC75F4237B731DA4365106822B35B1B1F', # finger print of key id 65106822B35B1B1F
-        }
-
         apt::source { 'falco':
           location => 'https://download.falco.org/packages/deb',
           release  => 'stable',
           repos    => 'main',
+          # https://falco.org/repo/falcosecurity-packages.asc, fingerprint 478B2FBBC75F4237B731DA4365106822B35B1B1F
+          key      => {
+            'name'   => 'falcosecurity.asc',
+            'source' => 'puppet:///modules/falco/falcosecurity.asc',
+          },
         }
       }
       'RedHat': {

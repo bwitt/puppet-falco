@@ -30,7 +30,7 @@ describe 'falco' do
 
         case facts[:os]['family']
         when 'Debian'
-          it { is_expected.to contain_apt__key('falcosecurity') }
+          it { is_expected.to contain_apt__keyring('falcosecurity.asc') }
           it { is_expected.to contain_apt__source('falco') }
           it { is_expected.to contain_package("linux-headers-#{facts[:kernelrelease]}") }
         when 'RedHat'
